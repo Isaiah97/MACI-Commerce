@@ -1,0 +1,15 @@
+# MACI-Commerce
+
+import java.util.*;
+
+public class Product {
+  public String id, name;
+  public double price;
+  public int stock;
+
+  Product(String id, String name, double price, int stock) {
+    this.id = id;
+    this.name = name;
+    this.price = price;
+    this.stock = stock;
+    }
