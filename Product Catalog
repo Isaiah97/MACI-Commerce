@@ -1,11 +1,11 @@
 # MACI-Commerce
 
-package model;
+import.java.util.*;
 
-public class Product {
-  public String id, name;
-  public double price;
-  public int stock;
+class Product {
+    String id, name;
+    double price;
+    int stock;
 
   public Product(String id, String name, double price, int stock) {
     this.id = id;
@@ -14,12 +14,14 @@ public class Product {
     this.stock = stock;
     }
 
-public boolean isAvailable() {
+ boolean isAvailable() {
   return stock > 0;
 }
 
 //Override
 public String toString(){
-retrun id + ": " + name _ " ($" + price + ") - Stock: " + stock;
+return id + ": " + name _ " ($" + price + ") - Stock: " + stock;
   }
 }
+
+
