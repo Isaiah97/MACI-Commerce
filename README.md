@@ -5,13 +5,13 @@ Topic: A software that performs simple E-commerce site for a “abc” sales Com
 Project will contain database
 
 - Product catalog
-    - Product Availability
-    - Managing - Product adding and removal from website
-    - Product Catalog
-    - Search Function
-    - Product may read into a different section of products
+    - Product Availability (Product.java)
+    - Managing - Product adding and removal from website (ProductRepository.java)
+    - Product Catalog (ProductService.java)
+    - Search Function (ProductController.java)
+    - Product may read into a different section of products 
     - Product Database
-    - Functional Front and Backend for products  
+    - Functional Front and Backend for products  (EcommerceApplication.java)
 - Tracking and Ordering Process
 - Delivery
 - Security Administration
