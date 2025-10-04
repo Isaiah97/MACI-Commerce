@@ -4,4 +4,14 @@ Topic: A software that performs simple E-commerce site for a “abc” sales Com
 
 Project will contain database
 
-- Product catalog 
+- Product catalog
+    - Product Availability
+    - Managing - Product adding and removal from website
+    - Product Catalog
+    - Search Function
+    - Product may read into a different section of products
+    - Product Database
+    - Functional Front and Backend for products  
+- Tracking and Ordering Process
+- Delivery
+- Security Administration
