@@ -1,1 +1,18 @@
+MACI-Commerce guide to installing Postgresql onto MAC terminals
+----------------------------------------------------------------
+
+I currently use bash shell for terminal if you do not you can 
+see on the top of your terminal screen which shell you use
+
+example: zsh or bash
+
+To switch shells enter this command into your terminal:
+
+    chsh -s /bin/bash
+
+then to confirm that your shell is switch use:
+
+	echo $SHELL
+
+----------------------------------------------------------------
 
