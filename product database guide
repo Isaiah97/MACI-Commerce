@@ -1,4 +1,4 @@
-MACI-Commerce guide to installing Postgresql onto MAC terminals
+MACI-Commerce guide to installing PostgreSQL onto MAC terminals
 ----------------------------------------------------------------
 
 I currently use bash shell for terminal if you do not you can 
@@ -16,3 +16,21 @@ then to confirm that your shell is switch use:
 
 ----------------------------------------------------------------
 
+For our project we will be using Homebrew to help install our
+databases
+
+Enter the following codes in order to install Homebrew and 
+PostgreSQL:
+
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+
+brew update
+
+
+brew install postgresql
+
+
+brew services start postgresql
+
+----------------------------------------------------------------
