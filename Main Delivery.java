@@ -30,3 +30,6 @@ public class Main {
         tracker.updateDeliveryStatus(order);
         tracker.printTrackingInfo(order);
         tracker.markAsDelivered(order);
+    }
+
+}
