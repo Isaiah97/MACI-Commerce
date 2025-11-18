@@ -1,3 +1,5 @@
+package app;
+
 // Admin login and audit
 AuthService auth = new AuthService();
 AuditLogger logger = new AuditLogger();
