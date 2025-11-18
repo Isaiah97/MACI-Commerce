@@ -1,18 +1,9 @@
 package model;
 
 public enum DeliveryStatus {
-    NOT_SHIPPED("Package has not been shipped"),
-    IN_TRANSIT("Package is in transit"),
-    DELIVERED("Package has been delivered"),
-    FAILED_TO_UPDATE("Tracking is unavailable");
+    NOT_SHIPPED,
+    IN_TRANSIT,
+    DELIVERED,
+    FAILED_TO_UPDATE;
 
-    private final String message;
-
-    DeliveryStatus (String msg){
-        this.message = msg;
-    }
-
-    public String getMessage(){
-        return message;
-    }
 }
