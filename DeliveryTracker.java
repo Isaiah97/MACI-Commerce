@@ -1,6 +1,6 @@
 package service;
 
-import model.*; //error
+import model; //error
 
 public class DeliveryTracker {
     public void updateDeliveryStatus(Order order) { //error
