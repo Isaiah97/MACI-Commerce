@@ -15,6 +15,4 @@ public enum DeliveryStatus {
     public String getMessage(){
         return message;
     }
-
-
 }
