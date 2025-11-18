@@ -23,7 +23,7 @@ From Main Branch -> Different Branches
    - Order.java
    - OrderService.java
    - PaymentProcessor.java
-   - EmailService.java\
+   - EmailService.java
    - DeliveryTracker.java
    - Main Tracking-and-Order-Processing.java
 - Delivery
