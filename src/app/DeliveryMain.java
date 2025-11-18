@@ -1,8 +1,10 @@
+package app;
+
 import model.*;
 import service.*;
 import java.util.*;
 
-public class Deliverymain {
+public class DeliveryMain {
     public static void main(String[] args) {
         // Sample bouquets
         Bouquet b1 = new Bouquet("B001", "Rose Delight", "Roses", 29.99, true);
