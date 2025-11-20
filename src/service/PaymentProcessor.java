@@ -1,7 +1,6 @@
 package service;
 
-import model.Order;
-import model.OrderStatus;
+import model.*;
 
 public class PaymentProcessor {
     public boolean processPayment(String cardNumber, String expiry, String cvv, Order order) {
