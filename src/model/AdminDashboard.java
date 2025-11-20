@@ -1,4 +1,4 @@
-package service;
+package model;
 
 import model.Bouquet;
 import model.Order;
