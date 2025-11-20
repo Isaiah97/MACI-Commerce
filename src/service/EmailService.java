@@ -1,6 +1,6 @@
 package service;
 
-import model.Order;
+import model.*;
 
 public class EmailService {
     public void sendConfirmation(String toEmail, Order order) {
