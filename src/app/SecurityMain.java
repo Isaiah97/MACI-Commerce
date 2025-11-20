@@ -1,3 +1,12 @@
+package app;
+
+import model.*;
+import service.*;
+
+public class SecurityMain{
+    public static void main(String[] args) {
+
+
 // Admin login and audit
 AuthService auth = new AuthService();
 AuditLogger logger = new AuditLogger();
@@ -9,4 +18,6 @@ if (auth.authenticate("admin", "secure123")) {
     dashboard.displayOrders(orderService.getAllOrders());
 } else {
     System.out.println("❌ Unauthorized access attempt.");
+        }
+    }
 }
