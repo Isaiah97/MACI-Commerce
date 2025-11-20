@@ -1,7 +1,6 @@
 package service;
 
-import model.Order;
-import model.OrderStatus;
+import model.*;
 import java.util.*;
 
 public class OrderService {
