@@ -5,8 +5,6 @@ import service.*;
 
 public class SecurityMain{
     public static void main(String[] args) {
-
-
 // Admin login and audit
 AuthService auth = new AuthService();
 AuditLogger logger = new AuditLogger();
