@@ -1,5 +1,7 @@
 package service;
 
+import model.*;
+
 import model.Bouquet;
 import java.util.List;
 
