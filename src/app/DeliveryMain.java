@@ -1,3 +1,5 @@
+package app;
+
 import model.*;
 import service.*;
 import java.util.*;
@@ -35,3 +37,4 @@ public class DeliveryMain {
         System.out.println("\n📋 Incoming Orders:");
         orderService.getAllOrders().forEach(System.out::println);
     }
+}
