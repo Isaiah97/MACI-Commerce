@@ -32,6 +32,9 @@ public class DeliveryMain {
         tracker.updateDeliveryStatus(order);
         tracker.printTrackingInfo(order);
         tracker.markAsDelivered(order);
-    }
 
+        // Admin views all orders
+        System.out.println("\n📋 Incoming Orders:");
+        orderService.getAllOrders().forEach(System.out::println);
+    }
 }
