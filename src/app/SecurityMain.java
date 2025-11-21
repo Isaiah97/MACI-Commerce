@@ -19,3 +19,4 @@ if (auth.authenticate("admin", "secure123")) {
     System.out.println("❌ Unauthorized access attempt.");
 }
 }
+}
