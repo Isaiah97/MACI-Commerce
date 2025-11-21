@@ -21,3 +21,4 @@ public class Main {
             System.out.println("Payment failed. Please check your card details.");
         }
     }
+}
