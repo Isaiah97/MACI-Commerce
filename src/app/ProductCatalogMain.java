@@ -4,7 +4,7 @@ import model.*;
 import service.*;
 import java.util.*;
 
-public class Main {
+public class ProductCatalogMain {
     public static void main(String[] args) {
         CatalogService catalog = new CatalogService();
         List<Bouquet> results = catalog.search("Rose", "Roses", 10, 50);
