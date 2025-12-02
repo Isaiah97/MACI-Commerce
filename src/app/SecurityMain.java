@@ -2,6 +2,8 @@ package app;
 
 import model.*;
 import service.*;
+import service.CatalogService;
+import service.OrderService;
 
 public class SecurityMain{
     public static void main(String[] args){
