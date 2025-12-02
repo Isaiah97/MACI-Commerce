@@ -9,6 +9,7 @@ public class ProductCatalogMain {
         CatalogService catalog = new CatalogService();
         List<Bouquet> results = catalog.search("Rose", "Roses", 10, 50);
         results.forEach(System.out::println);
+        dashboard.displayCatalog(catalog.getAll());
 
         Order order = new Order(results, ShippingMethod.EXPRESS);
         PaymentProcessor payment = new PaymentProcessor();
