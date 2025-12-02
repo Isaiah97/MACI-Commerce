@@ -17,7 +17,7 @@ public class DeliveryMain {
 
         // Process payment
         PaymentProcessor payment = new PaymentProcessor();
-        double totalAmount = order.getTotalAmount();
+        double totalAmount = order.getTotal();
         boolean paid = payment.processPayment("4111111111111111", "12/26", "123", totalAmount);
         // Send email if successful
         if (paid) {
