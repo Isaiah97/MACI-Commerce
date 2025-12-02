@@ -20,6 +20,6 @@ public class CatalogService{
 				results.add(b);
 			}
 		}
+		return results;
 	}
-	return results;
 }
