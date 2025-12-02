@@ -1,7 +1,7 @@
 package app;
 
-import model.*;
-import service.*;
+import model.Bouquet;
+import service.CatalogService;
 import java.util.*;
 
 public class ProductCatalogMain {
