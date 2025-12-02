@@ -19,6 +19,7 @@ public class CatalogService{
 			if (matchesName && matchesCategory && inRange) {
 				results.add(b);
 			}
+		}
 	}
 	return results;
 }
