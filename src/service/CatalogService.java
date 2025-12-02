@@ -20,19 +20,28 @@ public class CatalogService{
         bouquets.add(new Bouquet("Lavender Dreams", "Mixed", 44.25));
     }
 
-	public List<Bouquet> search (String name, String category, int minPrice, int maxPrice){
-		List<Bouquet> all = getAll();
-		List <Bouquet> results = new ArrayList<>();
+    public List<Bouquet> getAll() {
+        
+        return new ArrayList<>(bouquets);
 
-		for (Bouquet b : all) {
-			boolean matchesName = b.getName().contains(name);
-			boolean matchesCategory = b.getCategory().equalsIgnoreCase(category);
-			boolean inRange = b.getPrice() >= minPrice && b.getPrice() <= maxPrice;
+	public List<Bouquet> search(String name, String category, int minPrice, int maxPrice) {
+        List<Bouquet> results = new ArrayList<>();
 
-			if (matchesName && matchesCategory && inRange) {
-				results.add(b);
-			}
-		}
-		return results;
-	}
+        for (Bouquet b : bouquets) {
+            boolean matchesName = (name == null || name.isEmpty())
+                    || b.getName().toLowerCase().contains(name.toLowerCase());
+
+            boolean matchesCategory = (category == null || category.isEmpty())
+                    || b.getCategory().equalsIgnoreCase(category);
+
+            boolean inRange = b.getPrice() >= minPrice && b.getPrice() <= maxPrice;
+
+            if (matchesName && matchesCategory && inRange) {
+                results.add(b);
+            }
+        }
+
+        return results;
+    }
+
 }
