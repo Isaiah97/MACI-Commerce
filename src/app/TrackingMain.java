@@ -17,8 +17,9 @@ public class TrackingMain {
 
         // Process payment
         PaymentProcessor payment = new PaymentProcessor();
-        boolean paid = payment.processPayment("4111111111111111", "12/26", "123", order);
-
+        double totalAmount = order.getTotalAmount();
+        boolean paid = payment.processPayment("4111111111111111", "12/26", "123", totalAmount);
+        
         // Send email if successful
         if (paid) {
             EmailService email = new EmailService();
