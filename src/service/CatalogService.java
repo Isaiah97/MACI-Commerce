@@ -23,6 +23,7 @@ public class CatalogService{
     public List<Bouquet> getAll() {
         
         return new ArrayList<>(bouquets);
+    }
 
 	public List<Bouquet> search(String name, String category, int minPrice, int maxPrice) {
         List<Bouquet> results = new ArrayList<>();
