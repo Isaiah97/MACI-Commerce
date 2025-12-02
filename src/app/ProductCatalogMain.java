@@ -1,7 +1,11 @@
 package app;
 
 import model.Bouquet;
+import model.Order;
+import model.ShippingMethod;
 import service.CatalogService;
+import service.PaymentProcessor;
+import service.EmailService;
 import java.util.*;
 
 public class ProductCatalogMain {
