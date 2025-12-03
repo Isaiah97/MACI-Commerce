@@ -5,27 +5,44 @@ import java.util.List;
 import model.Bouquet;
 
 /**
- * 
- * TODO: implementation of catalog operation
+ * Catalog operations
  */
+public class CatalogService {
 
-public class CatalogService{
+    private final List<Bouquet> bouquets = new ArrayList<>();
 
-	private final List<Bouquet> bouquets = new ArrayList<>();
+    public CatalogService() {
+        // name, description, category, price, available
+        bouquets.add(new Bouquet(
+            "Spring Garden Bouquet",
+            "A hand-arranged mix of roses, lilies, and seasonal greens.",
+            "Roses",
+            39.99,
+            true
+        ));
 
-	public CatalogService() {
+        bouquets.add(new Bouquet(
+            "Romantic Rose Dozen",
+            "A classic dozen red roses arranged with baby’s breath.",
+            "Roses",
+            49.99,
+            true
+        ));
 
-		bouquets.add(new Bouquet("Spring Garden Bouquet", "Roses", 39.99));
-		bouquets.add(new Bouquet("Romantic Rose Dozen", "Roses", 49.99));
-        bouquets.add(new Bouquet("Lavender Dreams", "Mixed", 44.25));
+        bouquets.add(new Bouquet(
+            "Lavender Dreams",
+            "Lavender roses and purple accents for a calming look.",
+            "Mixed",
+            44.25,
+            true
+        ));
     }
 
     public List<Bouquet> getAll() {
-        
         return new ArrayList<>(bouquets);
     }
 
-	public List<Bouquet> search(String name, String category, int minPrice, int maxPrice) {
+    public List<Bouquet> search(String name, String category, int minPrice, int maxPrice) {
         List<Bouquet> results = new ArrayList<>();
 
         for (Bouquet b : bouquets) {
@@ -44,5 +61,4 @@ public class CatalogService{
 
         return results;
     }
-
 }
