@@ -1,6 +1,10 @@
 package service;
 
 import model.*;
+import ui.AdminDashboard;
+import security.AuthService;
+import logging.AuditLogger;
+
 
 /**
 *TODO: Implemnts authentication logic
