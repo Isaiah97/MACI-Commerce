@@ -2,8 +2,6 @@ package app;
 
 import model.*;
 import service.*;
-import service.CatalogService;
-import service.OrderService;
 
 public class SecurityMain{
     public static void main(String[] args){
@@ -12,9 +10,12 @@ public class SecurityMain{
 AuthService auth = new AuthService();
 AuditLogger logger = new AuditLogger();
 AdminDashboard dashboard = new AdminDashboard();
+CatalogService catalog = new CatalogService();
+OrderService orderService = new OrderService();
 
 if (auth.authenticate("admin", "secure123")) {
     logger.log("Admin logged in", "admin");
+    
     dashboard.displayCatalog(catalog.getAll());
     dashboard.displayOrders(orderService.getAllOrders());
 } else {
