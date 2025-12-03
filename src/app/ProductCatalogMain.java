@@ -15,9 +15,9 @@ public class ProductCatalogMain {
 
         System.out.println("Full Catalog: ");
         for (Bouquet b : catalog.getAll()){
-            System.out.println(b)
+            System.out.println(b);
         }
-        
+
         List<Bouquet> results = catalog.search("Rose", "Roses", 10, 50);
         System.out.println("\nSearch Results (\"Rose\", category \"Roses\", price 10–50):");
         for (Bouquet b : results) {
