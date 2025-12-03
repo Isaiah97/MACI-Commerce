@@ -23,7 +23,7 @@ public class TrackingMain {
         // Send email if successful
         if (paid) {
             EmailService email = new EmailService();
-            email.sendConfirmation("customer@example.com", order);
+            email.sendConfirmation(order);
         } else {
             System.out.println("❌ Payment failed for Order ID: " + order.getOrderId());
         }
