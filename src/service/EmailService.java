@@ -12,8 +12,8 @@ public class EmailService {
         //String body = "Dear Customer,\n\nThank you for your purchase!\n\n" +
           //            order.toString() + "\n\nWe hope your flowers bring joy!\n\nBouquet Sales Co.";
         //System.out.println("Sending email to " + toEmail + "...\nSubject: " + subject + "\n\n" + body);
-        System.out.println("Sending order confirmation email for order: " + order.getOrderId());
-        System.out.println(order); // print order details
+        System.out.println("📧 Sending order confirmation email for order: " + order.getOrderId());
+        System.out.println(order);
     }
 }
 
