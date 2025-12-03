@@ -39,7 +39,7 @@ public class ProductCatalogMain {
 
                 // Send confirmation email
                 EmailService email = new EmailService();
-                email.sendOrderConfirmation(order);
+                email.sendConfirmation(order);
             } else {
                 System.out.println("\nPayment failed for order:");
                 System.out.println(order);
