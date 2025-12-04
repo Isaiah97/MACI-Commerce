@@ -89,5 +89,128 @@ public class FloralShopFrame {
 
         add(bottomPanel, BorderLayout.SOUTH);
     }
+    private void loadCatalog() {
+    	catalogListModel.clear();
+    	for (Bouquet b : catalogService.getAll()){
+    		catalogListModel.addElement(b);	
+    	}
+    }
+  //going to need add, update, checkout, and cart clearing
+
+    private onAddToOrder(ActionEvent e) {
+    	Bouquet selected = catalogList.getSelectedValue();
+    	if (selected == null) {
+    		JOptionPane.showMessageDialog(this, "Please select a bouquet first.");
+    		return;
+        }
+        cartListModel.addElement(selected);
+        updateOrderSummaryPreview();
+    }
+
+    private void updateOrderSummaryPreview() {
+        if (cartListModel.isEmpty()) {
+            orderSummaryArea.setText("No items in order yet.");
+            return;
+        }
+
+        List<Bouquet> items = new ArrayList<>();
+        for (int i = 0; i < cartListModel.size(); i++) {
+            items.add(cartListModel.getElementAt(i));
+        }
+
+        // Temporary order just to show summary (uses your existing Order model)
+        Order tempOrder = new Order(items, ShippingMethod.STANDARD);
+        orderSummaryArea.setText(tempOrder.toString());
+    }
+
+    private void onCheckout(ActionEvent e) {
+        if (cartListModel.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Cart is empty.");
+            return;
+        }
+
+        List<Bouquet> items = new ArrayList<>();
+        for (int i = 0; i < cartListModel.size(); i++) {
+            items.add(cartListModel.getElementAt(i));
+        }
+
+        // In real app, let user pick shipping method (combo box, etc.)
+        ShippingMethod shipping = ShippingMethod.EXPRESS;
+        Order order = new Order(items, shipping);
+
+        PaymentProcessor payment = new PaymentProcessor();
+        EmailService email = new EmailService();
+
+        double totalAmount = order.getTotal();
+        boolean paid = payment.processPayment("4111111111111111", "12/26", "123", totalAmount);
+
+        if (paid) {
+            orderService.addOrder(order);
+            email.sendConfirmation(order);
+
+            JOptionPane.showMessageDialog(this,
+                    "Payment successful!\nOrder ID: " + order.getOrderId(),
+                    "Checkout",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            // clear cart
+            cartListModel.clear();
+            updateOrderSummaryPreview();
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Payment failed. Please try again.",
+                    "Checkout",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void onAdminPanel(ActionEvent e) {
+        AuthService auth = new AuthService();
+        AuditLogger logger = new AuditLogger();
+        AdminDashboard dashboard = new AdminDashboard();
+
+        JPanel panel = new JPanel(new GridLayout(2, 2, 5, 5));
+        JTextField userField = new JTextField("admin");
+        JPasswordField passField = new JPasswordField();
+
+        panel.add(new JLabel("Username:"));
+        panel.add(userField);
+        panel.add(new JLabel("Password:"));
+        panel.add(passField);
+
+        int result = JOptionPane.showConfirmDialog(
+                this,
+                panel,
+                "Admin Login",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+        );
+
+        if (result == JOptionPane.OK_OPTION) {
+            String username = userField.getText();
+            String password = new String(passField.getPassword());
+
+            if (auth.authenticate(username, password)) {
+                logger.log("Admin logged in via GUI", username);
+
+                // For now, just dump info to console & a simple dialog
+                System.out.println("=== ADMIN CATALOG VIEW ===");
+                dashboard.displayCatalog(catalogService.getAll());
+
+                System.out.println("=== ADMIN ORDER VIEW ===");
+                dashboard.displayOrders(orderService.getAllOrders());
+
+                JOptionPane.showMessageDialog(this,
+                        "Admin logged in.\nCatalog & orders printed to console.",
+                        "Admin Panel",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Invalid admin credentials.",
+                        "Admin Panel",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
 }
-    
+    	
