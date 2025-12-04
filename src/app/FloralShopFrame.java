@@ -18,5 +18,19 @@ import service.AdminDashboard;
 import service.AuditLogger;
 
 public class FloralShopFrame {
-	
+
+	private final CatalogService catalogService;
+	private final OrderService orderService;
+
+	private final DefaultListModel<Bouquet> catalogListModel = new DefaultListModel<>();
+	private final JList<Bouquet> catalogList = new JList<>(cartListModel);
+
+	private final JTextArea orderSummaryArea = new JTextArea(8, 30);
+
+	public FloralShopFrame(CatalogService catalogService, OrderService orderService) {
+		this.catalogService = catalogService;
+		this.orderService = orderService;
+
+		
+	}
 }
