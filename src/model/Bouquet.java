@@ -6,7 +6,7 @@ public class Bouquet {
     private String category;
     private double price;
     private boolean inStock;
-    private boolean isAvailable
+    private boolean available;
 
     public Bouquet(String id, String name, String category, double price, boolean inStock) {
         this.id = id;
