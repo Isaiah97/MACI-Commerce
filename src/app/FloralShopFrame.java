@@ -49,7 +49,7 @@ public class FloralShopFrame {
 
 		JPanel centerPanel = new JPanel(new GridLayout(1, 2, 10, 0));
 
-		JPanel catalogPanel = bew JPanel(new Border());
+		JPanel catalogPanel = new JPanel(new Border());
 		catalogPanel.setBorder(BorderFactory.createTitledBorder("Catalog"));
 		catalogList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         catalogPanel.add(new JScrollPane(catalogList), BorderLayout.CENTER);
@@ -97,7 +97,7 @@ public class FloralShopFrame {
     }
   //going to need add, update, checkout, and cart clearing
 
-    private onAddToOrder(ActionEvent e) {
+    private void onAddToOrder(ActionEvent e) {
     	Bouquet selected = catalogList.getSelectedValue();
     	if (selected == null) {
     		JOptionPane.showMessageDialog(this, "Please select a bouquet first.");
