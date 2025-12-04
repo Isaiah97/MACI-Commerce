@@ -17,47 +17,57 @@ import service.AuthService;
 import service.AdminDashboard;
 import service.AuditLogger;
 
-public class FloralShopFrame {
+public class FloralShopFrame extends JFrame {
 
-	private final CatalogService catalogService;
-	private final OrderService orderService;
+    private final CatalogService catalogService;
+    private final OrderService orderService;
 
-	private final DefaultListModel<Bouquet> catalogListModel = new DefaultListModel<>();
-	private final JList<Bouquet> catalogList = new JList<>(cartListModel);
+    private final DefaultListModel<Bouquet> catalogListModel = new DefaultListModel<>();
+    private final JList<Bouquet> catalogList = new JList<>(catalogListModel);
 
-	private final JTextArea orderSummaryArea = new JTextArea(8, 30);
+    private final DefaultListModel<Bouquet> cartListModel = new DefaultListModel<>();
+    private final JList<Bouquet> cartList = new JList<>(cartListModel);
 
-	public FloralShopFrame(CatalogService catalogService, OrderService orderService) {
-		this.catalogService = catalogService;
-		this.orderService = orderService;
+    private final JTextArea orderSummaryArea = new JTextArea(8, 30);
 
-		setTitle("MACI Commerce");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(900, 600);
-		setLocationRelativeTo(null);
+    public FloralShopFrame(CatalogService catalogService, OrderService orderService) {
+        this.catalogService = catalogService;
+        this.orderService = orderService;
 
-		initComponents();
-		loadCatalog();
-	}
+        setTitle("MACI Commerce - Flower Shop");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(900, 600);
+        setLocationRelativeTo(null);
 
-	private void initComponents() {
-		setLayout(new Border());
+        initComponents();
+        loadCatalog();
+    }
 
-		JLabel title = new JLabel("MACI Commerce", SwingConstants.CENTER);
-		title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
-		add(title, Border.NORTH);
+//want all components of a commerce site going to need to research into e-commerce sites
+// need title, catalog with cart, a catalog panel, need a cart panel to view items in the cart,
+// an order summary for the customers to review and to verify
+    private void initComponents() {
+        setLayout(new BorderLayout());
 
-		JPanel centerPanel = new JPanel(new GridLayout(1, 2, 10, 0));
+        // Top title
+        JLabel title = new JLabel("MACI Commerce - Flower Shop", SwingConstants.CENTER);
+        title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
+        add(title, BorderLayout.NORTH);
 
-		JPanel catalogPanel = new JPanel(new Border());
-		catalogPanel.setBorder(BorderFactory.createTitledBorder("Catalog"));
-		catalogList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        // Center: catalog + cart
+        JPanel centerPanel = new JPanel(new GridLayout(1, 2, 10, 0));
+
+        // Catalog panel
+        JPanel catalogPanel = new JPanel(new BorderLayout());
+        catalogPanel.setBorder(BorderFactory.createTitledBorder("Catalog"));
+        catalogList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         catalogPanel.add(new JScrollPane(catalogList), BorderLayout.CENTER);
 
         JButton addToCartBtn = new JButton("Add to Order ➜");
         addToCartBtn.addActionListener(this::onAddToOrder);
         catalogPanel.add(addToCartBtn, BorderLayout.SOUTH);
 
+        // Cart panel
         JPanel cartPanel = new JPanel(new BorderLayout());
         cartPanel.setBorder(BorderFactory.createTitledBorder("Current Order"));
         cartList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -68,6 +78,7 @@ public class FloralShopFrame {
 
         add(centerPanel, BorderLayout.CENTER);
 
+        // Bottom: order summary + buttons
         JPanel bottomPanel = new JPanel(new BorderLayout());
 
         orderSummaryArea.setEditable(false);
@@ -76,11 +87,11 @@ public class FloralShopFrame {
 
         JPanel buttonRow = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-        JButton checkoutBtn = new JButton("Checkout");
-        checkoutBtn.addActionListener(this::onCheckout);
-
         JButton adminBtn = new JButton("Admin Panel");
         adminBtn.addActionListener(this::onAdminPanel);
+
+        JButton checkoutBtn = new JButton("Checkout");
+        checkoutBtn.addActionListener(this::onCheckout);
 
         buttonRow.add(adminBtn);
         buttonRow.add(checkoutBtn);
@@ -89,19 +100,20 @@ public class FloralShopFrame {
 
         add(bottomPanel, BorderLayout.SOUTH);
     }
+
     private void loadCatalog() {
-    	catalogListModel.clear();
-    	for (Bouquet b : catalogService.getAll()){
-    		catalogListModel.addElement(b);	
-    	}
+        catalogListModel.clear();
+        for (Bouquet b : catalogService.getAll()) {
+            catalogListModel.addElement(b);
+        }
+        updateOrderSummaryPreview();
     }
-  //going to need add, update, checkout, and cart clearing
 
     private void onAddToOrder(ActionEvent e) {
-    	Bouquet selected = catalogList.getSelectedValue();
-    	if (selected == null) {
-    		JOptionPane.showMessageDialog(this, "Please select a bouquet first.");
-    		return;
+        Bouquet selected = catalogList.getSelectedValue();
+        if (selected == null) {
+            JOptionPane.showMessageDialog(this, "Please select a bouquet first.");
+            return;
         }
         cartListModel.addElement(selected);
         updateOrderSummaryPreview();
@@ -118,7 +130,6 @@ public class FloralShopFrame {
             items.add(cartListModel.getElementAt(i));
         }
 
-        // Temporary order just to show summary (uses your existing Order model)
         Order tempOrder = new Order(items, ShippingMethod.STANDARD);
         orderSummaryArea.setText(tempOrder.toString());
     }
@@ -134,7 +145,6 @@ public class FloralShopFrame {
             items.add(cartListModel.getElementAt(i));
         }
 
-        // In real app, let user pick shipping method (combo box, etc.)
         ShippingMethod shipping = ShippingMethod.EXPRESS;
         Order order = new Order(items, shipping);
 
@@ -153,7 +163,6 @@ public class FloralShopFrame {
                     "Checkout",
                     JOptionPane.INFORMATION_MESSAGE);
 
-            // clear cart
             cartListModel.clear();
             updateOrderSummaryPreview();
         } else {
@@ -193,7 +202,6 @@ public class FloralShopFrame {
             if (auth.authenticate(username, password)) {
                 logger.log("Admin logged in via GUI", username);
 
-                // For now, just dump info to console & a simple dialog
                 System.out.println("=== ADMIN CATALOG VIEW ===");
                 dashboard.displayCatalog(catalogService.getAll());
 
@@ -213,4 +221,3 @@ public class FloralShopFrame {
         }
     }
 }
-    	
