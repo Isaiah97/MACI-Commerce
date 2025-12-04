@@ -39,5 +39,15 @@ public class FloralShopFrame {
 		initComponents();
 		loadCatalog();
 	}
-	
+
+	private void initComponents() {
+		setLayout(new Border());
+
+		JLabel title = new JLabel("MACI Commerce", SwingConstants.CENTER);
+		title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
+		add(title, Border.NORTH);
+
+		
+	}
+
 }
