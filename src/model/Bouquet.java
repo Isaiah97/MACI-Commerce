@@ -21,6 +21,10 @@ public class Bouquet {
     public double getPrice() { return price; }
     public boolean isInStock() { return inStock; }
 
+    public boolean isAvailable() {
+        return available;
+    }
+
     @Override
     public String toString() {
         return name + " (" + category + ") - $" + price + (inStock ? " [Available]" : " [Out of Stock]");
