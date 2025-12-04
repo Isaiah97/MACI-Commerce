@@ -12,7 +12,7 @@ public class GUIMain {
 
 			FloralShopFrame frame = new FloralShopFrame(CatalogService, OrderService);
 			frame.setVisible(true);
-		}
+		});
 	}
 
 }
