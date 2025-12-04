@@ -31,6 +31,13 @@ public class FloralShopFrame {
 		this.catalogService = catalogService;
 		this.orderService = orderService;
 
-		
+		setTitle("MACI Commerce");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(900, 600);
+		setLocationRelativeTo(null);
+
+		initComponents();
+		loadCatalog();
 	}
+	
 }
