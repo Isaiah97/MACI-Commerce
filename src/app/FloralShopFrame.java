@@ -174,50 +174,47 @@ public class FloralShopFrame extends JFrame {
     }
 
     private void onAdminPanel(ActionEvent e) {
-        AuthService auth = new AuthService();
-        AuditLogger logger = new AuditLogger();
-        AdminDashboard dashboard = new AdminDashboard();
+    AuthService auth = new AuthService();
+    AuditLogger logger = new AuditLogger();
 
-        JPanel panel = new JPanel(new GridLayout(2, 2, 5, 5));
-        JTextField userField = new JTextField("admin");
-        JPasswordField passField = new JPasswordField();
+    JPanel panel = new JPanel(new GridLayout(2, 2, 5, 5));
+    JTextField userField = new JTextField("admin");
+    JPasswordField passField = new JPasswordField();
 
-        panel.add(new JLabel("Username:"));
-        panel.add(userField);
-        panel.add(new JLabel("Password:"));
-        panel.add(passField);
+    panel.add(new JLabel("Username:"));
+    panel.add(userField);
+    panel.add(new JLabel("Password:"));
+    panel.add(passField);
 
-        int result = JOptionPane.showConfirmDialog(
-                this,
-                panel,
-                "Admin Login",
-                JOptionPane.OK_CANCEL_OPTION,
-                JOptionPane.PLAIN_MESSAGE
-        );
+    int result = JOptionPane.showConfirmDialog(
+            this,
+            panel,
+            "Admin Login",
+            JOptionPane.OK_CANCEL_OPTION,
+            JOptionPane.PLAIN_MESSAGE
+    );
 
-        if (result == JOptionPane.OK_OPTION) {
-            String username = userField.getText();
-            String password = new String(passField.getPassword());
+    if (result == JOptionPane.OK_OPTION) {
+        String username = userField.getText();
+        String password = new String(passField.getPassword());
 
-            if (auth.authenticate(username, password)) {
-                logger.log("Admin logged in via GUI", username);
+        if (auth.authenticate(username, password)) {
+            logger.log("Admin logged in via GUI", username);
 
-                System.out.println("=== ADMIN CATALOG VIEW ===");
-                dashboard.displayCatalog(catalogService.getAll());
+            // OPEN THE NEW ADMIN WINDOW
+            AdminFrame adminFrame = new AdminFrame(catalogService, orderService, logger);
+            adminFrame.setVisible(true);
 
-                System.out.println("=== ADMIN ORDER VIEW ===");
-                dashboard.displayOrders(orderService.getAllOrders());
-
-                JOptionPane.showMessageDialog(this,
-                        "Admin logged in.\nCatalog & orders printed to console.",
-                        "Admin Panel",
-                        JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this,
-                        "Invalid admin credentials.",
-                        "Admin Panel",
-                        JOptionPane.ERROR_MESSAGE);
-            }
+            JOptionPane.showMessageDialog(this,
+                    "Admin logged in. Admin Panel opened.",
+                    "Admin Panel",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this,
+                    "Invalid admin credentials.",
+                    "Admin Panel",
+                    JOptionPane.ERROR_MESSAGE);
         }
     }
+}
 }
