@@ -3,6 +3,7 @@ package app;
 import javax.swing.SwingUtilities;
 import service.CatalogService;
 import service.OrderService;
+import service.AuditLogger;  
 
 public class GUIMain {
 	public static void main(String[] args) {
@@ -10,9 +11,11 @@ public class GUIMain {
 			CatalogService catalogService = new CatalogService();
 			OrderService orderService = new OrderService();
 
-			FloralShopFrame frame = new FloralShopFrame(CatalogService, OrderService);
+			AuditLogger logger = new AuditLogger();   // or whatever constructor your project uses
+
+			AdminFrame frame = new AdminFrame(catalogService, orderService, logger);
 			frame.setVisible(true);
-		}
+		});
 	}
 
 }
