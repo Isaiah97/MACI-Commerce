@@ -7,17 +7,25 @@ import service.CatalogService;
 import service.OrderService;
 import service.AuditLogger;
 
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.JButton;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
 public class AdminFrame extends JFrame {
 
     private final CatalogService catalogService;
     private final OrderService orderService;
     private final AuditLogger logger;
+   
 
     // Orders tab components
     private JTable ordersTable;
@@ -42,6 +50,89 @@ public class AdminFrame extends JFrame {
         initUI();
     }
 
+    
+    private void initUI() {
+
+    // ===== BACK TO CUSTOMER MENU BUTTON =====
+    JButton backButton = new JButton("Back to Customer Menu");
+    backButton.addActionListener(e -> {
+        this.dispose();  // close admin window
+        new FloralShopFrame(catalogService, orderService).setVisible(true);
+    });
+
+    // ===== LOGOUT BUTTON =====
+    JButton logoutButton = new JButton("Logout");
+    logoutButton.addActionListener(e -> {
+        this.dispose();  
+        // If logout should return to login instead of customer menu:
+        // new LoginFrame().setVisible(true);
+        new FloralShopFrame(catalogService, orderService).setVisible(true);
+    });
+
+    // Header panel (top of the window)
+    JPanel header = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+    header.add(backButton);
+    header.add(logoutButton);
+
+    add(header, BorderLayout.NORTH);
+
+    // ===== Tabs =====
+    JTabbedPane tabs = new JTabbedPane();
+    tabs.addTab("Orders", createOrdersTab());
+    tabs.addTab("Catalog", createCatalogTab());
+    add(tabs, BorderLayout.CENTER);
+}
+
+
+
+    // ===================== ORDERS TAB =====================
+private JPanel createOrdersTab() {
+    JPanel panel = new JPanel(new BorderLayout());
+
+    // Table model with column names matching refreshOrdersTable()
+    ordersModel = new DefaultTableModel(
+        new Object[] { "Order ID", "Items", "Shipping", "Total", "Status" },
+        0
+    ) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            // make table read-only
+            return false;
+        }
+    };
+
+    // Table
+    ordersTable = new JTable(ordersModel);
+    ordersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+    JScrollPane scrollPane = new JScrollPane(ordersTable);
+    panel.add(scrollPane, BorderLayout.CENTER);
+
+    // ----- Buttons to change status -----
+    JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+    JButton pendingButton   = new JButton("Mark as Pending");
+    JButton shippedButton   = new JButton("Mark as Shipped");
+    JButton deliveredButton = new JButton("Mark as Delivered");
+    JButton cancelledButton = new JButton("Mark as Cancelled");
+
+    pendingButton.addActionListener(e -> updateOrderStatus(OrderStatus.PENDING));
+    shippedButton.addActionListener(e -> updateOrderStatus(OrderStatus.SHIPPED));
+    deliveredButton.addActionListener(e -> updateOrderStatus(OrderStatus.DELIVERED));
+    cancelledButton.addActionListener(e -> updateOrderStatus(OrderStatus.CANCELLED));
+
+    buttonsPanel.add(pendingButton);
+    buttonsPanel.add(shippedButton);
+    buttonsPanel.add(deliveredButton);
+    buttonsPanel.add(cancelledButton);
+
+    panel.add(buttonsPanel, BorderLayout.SOUTH);
+
+    // fill table initially
+    refreshOrdersTable();
+
+    return panel;
+}
     private void initUI() {
         JTabbedPane tabs = new JTabbedPane();
         tabs.addTab("Orders", createOrdersTab());
@@ -155,6 +246,20 @@ public class AdminFrame extends JFrame {
     }
 
     private void refreshCatalogTable() {
+    catalogModel.setRowCount(0);
+
+    List<Bouquet> bouquets = catalogService.getAll();
+    for (Bouquet b : bouquets) {
+        catalogModel.addRow(new Object[]{
+                b.getName(),
+                b.getCategory(),
+                b.getPrice()
+        });
+    }
+}
+
+}
+
         catalogModel.setRowCount(0);
 
         List<Bouquet> bouquets = catalogService.getAll();
