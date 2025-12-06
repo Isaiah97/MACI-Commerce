@@ -7,25 +7,17 @@ import service.CatalogService;
 import service.OrderService;
 import service.AuditLogger;
 
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.JButton;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
 public class AdminFrame extends JFrame {
 
     private final CatalogService catalogService;
     private final OrderService orderService;
     private final AuditLogger logger;
-   
 
     // Orders tab components
     private JTable ordersTable;
@@ -50,123 +42,75 @@ public class AdminFrame extends JFrame {
         initUI();
     }
 
-    
+    // ===================== MAIN UI LAYOUT =====================
     private void initUI() {
+        setLayout(new BorderLayout());
 
-    // ===== BACK TO CUSTOMER MENU BUTTON =====
-    JButton backButton = new JButton("Back to Customer Menu");
-    backButton.addActionListener(e -> {
-        this.dispose();  // close admin window
-        new FloralShopFrame(catalogService, orderService).setVisible(true);
-    });
+        // ----- Header with Back / Logout -----
+        JButton backButton = new JButton("Back to Customer Menu");
+        backButton.addActionListener(e -> {
+            this.dispose();
+            new FloralShopFrame(catalogService, orderService).setVisible(true);
+        });
 
-    // ===== LOGOUT BUTTON =====
-    JButton logoutButton = new JButton("Logout");
-    logoutButton.addActionListener(e -> {
-        this.dispose();  
-        // If logout should return to login instead of customer menu:
-        // new LoginFrame().setVisible(true);
-        new FloralShopFrame(catalogService, orderService).setVisible(true);
-    });
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.addActionListener(e -> {
+            this.dispose();
+            new FloralShopFrame(catalogService, orderService).setVisible(true);
+        });
 
-    // Header panel (top of the window)
-    JPanel header = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-    header.add(backButton);
-    header.add(logoutButton);
+        JPanel header = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        header.add(backButton);
+        header.add(logoutButton);
+        add(header, BorderLayout.NORTH);
 
-    add(header, BorderLayout.NORTH);
-
-    // ===== Tabs =====
-    JTabbedPane tabs = new JTabbedPane();
-    tabs.addTab("Orders", createOrdersTab());
-    tabs.addTab("Catalog", createCatalogTab());
-    add(tabs, BorderLayout.CENTER);
-}
-
-
-
-    // ===================== ORDERS TAB =====================
-private JPanel createOrdersTab() {
-    JPanel panel = new JPanel(new BorderLayout());
-
-    // Table model with column names matching refreshOrdersTable()
-    ordersModel = new DefaultTableModel(
-        new Object[] { "Order ID", "Items", "Shipping", "Total", "Status" },
-        0
-    ) {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            // make table read-only
-            return false;
-        }
-    };
-
-    // Table
-    ordersTable = new JTable(ordersModel);
-    ordersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-    JScrollPane scrollPane = new JScrollPane(ordersTable);
-    panel.add(scrollPane, BorderLayout.CENTER);
-
-    // ----- Buttons to change status -----
-    JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-
-    JButton pendingButton   = new JButton("Mark as Pending");
-    JButton shippedButton   = new JButton("Mark as Shipped");
-    JButton deliveredButton = new JButton("Mark as Delivered");
-    JButton cancelledButton = new JButton("Mark as Cancelled");
-
-    pendingButton.addActionListener(e -> updateOrderStatus(OrderStatus.PENDING));
-    shippedButton.addActionListener(e -> updateOrderStatus(OrderStatus.SHIPPED));
-    deliveredButton.addActionListener(e -> updateOrderStatus(OrderStatus.DELIVERED));
-    cancelledButton.addActionListener(e -> updateOrderStatus(OrderStatus.CANCELLED));
-
-    buttonsPanel.add(pendingButton);
-    buttonsPanel.add(shippedButton);
-    buttonsPanel.add(deliveredButton);
-    buttonsPanel.add(cancelledButton);
-
-    panel.add(buttonsPanel, BorderLayout.SOUTH);
-
-    // fill table initially
-    refreshOrdersTable();
-
-    return panel;
-}
-    private void initUI() {
+        // ----- Tabs -----
         JTabbedPane tabs = new JTabbedPane();
         tabs.addTab("Orders", createOrdersTab());
         tabs.addTab("Catalog", createCatalogTab());
-        add(tabs);
+        add(tabs, BorderLayout.CENTER);
     }
 
     // ===================== ORDERS TAB =====================
-
     private JPanel createOrdersTab() {
         JPanel panel = new JPanel(new BorderLayout());
 
-        String[] cols = {"Order ID", "Items", "Shipping", "Total", "Status"};
-        ordersModel = new DefaultTableModel(cols, 0) {
+        ordersModel = new DefaultTableModel(
+                new Object[]{"Order ID", "Items", "Shipping", "Total", "Status"},
+                0
+        ) {
             @Override
-            public boolean isCellEditable(int row, int col) {
-                return false;
+            public boolean isCellEditable(int row, int column) {
+                return false; // read-only table
             }
         };
+
         ordersTable = new JTable(ordersModel);
-        refreshOrdersTable();
-
-        JPanel buttons = new JPanel();
-        JButton shippedBtn = new JButton("Mark as SHIPPED");
-        JButton deliveredBtn = new JButton("Mark as DELIVERED");
-
-        shippedBtn.addActionListener(e -> updateOrderStatus(OrderStatus.SHIPPED));
-        deliveredBtn.addActionListener(e -> updateOrderStatus(OrderStatus.DELIVERED));
-
-        buttons.add(shippedBtn);
-        buttons.add(deliveredBtn);
-
+        ordersTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         panel.add(new JScrollPane(ordersTable), BorderLayout.CENTER);
-        panel.add(buttons, BorderLayout.SOUTH);
+
+        // Buttons to change status
+        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
+        JButton pendingButton   = new JButton("Mark as Pending");
+        JButton shippedButton   = new JButton("Mark as Shipped");
+        JButton deliveredButton = new JButton("Mark as Delivered");
+        JButton cancelledButton = new JButton("Mark as Cancelled");
+
+        pendingButton.addActionListener(e -> updateOrderStatus(OrderStatus.PENDING));
+        shippedButton.addActionListener(e -> updateOrderStatus(OrderStatus.SHIPPED));
+        deliveredButton.addActionListener(e -> updateOrderStatus(OrderStatus.DELIVERED));
+        cancelledButton.addActionListener(e -> updateOrderStatus(OrderStatus.CANCELLED));
+
+        buttonsPanel.add(pendingButton);
+        buttonsPanel.add(shippedButton);
+        buttonsPanel.add(deliveredButton);
+        buttonsPanel.add(cancelledButton);
+
+        panel.add(buttonsPanel, BorderLayout.SOUTH);
+
+        // fill table initially
+        refreshOrdersTable();
 
         return panel;
     }
@@ -209,29 +153,29 @@ private JPanel createOrdersTab() {
             return;
         }
 
-        // assumes your Order has setStatus(OrderStatus)
         selected.setStatus(newStatus);
         logger.log("Order " + orderId + " updated to " + newStatus, "admin");
-
         refreshOrdersTable();
     }
 
-    // ===================== CATALOG TAB (READ-ONLY) =====================
-
+    // ===================== CATALOG TAB =====================
     private JPanel createCatalogTab() {
         JPanel panel = new JPanel(new BorderLayout());
 
-        String[] cols = {"Name", "Category", "Price", "Available"};
-        catalogModel = new DefaultTableModel(cols, 0) {
+        catalogModel = new DefaultTableModel(
+                new Object[]{"Name", "Category", "Price", "Available"},
+                0
+        ) {
             @Override
-            public boolean isCellEditable(int row, int col) {
-                return false;
+            public boolean isCellEditable(int row, int column) {
+                return false; // read-only
             }
         };
-        catalogTable = new JTable(catalogModel);
-        refreshCatalogTable();
 
-        JPanel buttons = new JPanel();
+        catalogTable = new JTable(catalogModel);
+        panel.add(new JScrollPane(catalogTable), BorderLayout.CENTER);
+
+        JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton refreshBtn = new JButton("Refresh");
         refreshBtn.addActionListener(e -> refreshCatalogTable());
         buttons.add(refreshBtn);
@@ -239,27 +183,15 @@ private JPanel createOrdersTab() {
         JLabel note = new JLabel("Catalog is read-only in this version.");
         buttons.add(note);
 
-        panel.add(new JScrollPane(catalogTable), BorderLayout.CENTER);
         panel.add(buttons, BorderLayout.SOUTH);
+
+        // fill table initially
+        refreshCatalogTable();
 
         return panel;
     }
 
     private void refreshCatalogTable() {
-    catalogModel.setRowCount(0);
-
-    List<Bouquet> bouquets = catalogService.getAll();
-    for (Bouquet b : bouquets) {
-        catalogModel.addRow(new Object[]{
-                b.getName(),
-                b.getCategory(),
-                b.getPrice()
-        });
-    }
-}
-
-}
-
         catalogModel.setRowCount(0);
 
         List<Bouquet> bouquets = catalogService.getAll();
@@ -268,7 +200,7 @@ private JPanel createOrdersTab() {
                     b.getName(),
                     b.getCategory(),
                     b.getPrice(),
-                    b.isAvailable()
+                    b.isAvailable() ? "Available" : "Unavailable"
             });
         }
     }
