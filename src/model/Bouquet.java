@@ -1,32 +1,30 @@
 package model;
 
 public class Bouquet {
-    private String id;
     private String name;
+    private String description;
     private String category;
     private double price;
-    private boolean inStock;
     private boolean available;
 
-    public Bouquet(String id, String name, String category, double price, boolean inStock) {
-        this.id = id;
+    // name, description, category, price, available
+    public Bouquet(String name, String description, String category, double price, boolean available) {
         this.name = name;
+        this.description = description;
         this.category = category;
         this.price = price;
-        this.inStock = inStock;
+        this.available = available;
     }
 
-    public String getId() { return id; }
     public String getName() { return name; }
+    public String getDescription() { return description; }
     public String getCategory() { return category; }
     public double getPrice() { return price; }
-    public boolean isInStock() { return inStock; }
-
     public boolean isAvailable() { return available; }
-    
 
     @Override
     public String toString() {
-        return name + " (" + category + ") - $" + price + (inStock ? " [Available]" : " [Out of Stock]");
+        return name + " (" + category + ") - $" + price
+                + (available ? " [Available]" : " [Unavailable]");
     }
 }
