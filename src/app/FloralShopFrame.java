@@ -1,6 +1,8 @@
 package app;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -14,7 +16,6 @@ import service.OrderService;
 import service.PaymentProcessor;
 import service.EmailService;
 import service.AuthService;
-import service.AdminDashboard;
 import service.AuditLogger;
 
 public class FloralShopFrame extends JFrame {
@@ -22,9 +23,13 @@ public class FloralShopFrame extends JFrame {
     private final CatalogService catalogService;
     private final OrderService orderService;
 
+    // === CATALOG + SEARCH ===
     private final DefaultListModel<Bouquet> catalogListModel = new DefaultListModel<>();
     private final JList<Bouquet> catalogList = new JList<>(catalogListModel);
+    private final JTextField searchField = new JTextField();
+    private final List<Bouquet> allBouquets = new ArrayList<>();   // master list
 
+    // === CART / ORDER SUMMARY ===
     private final DefaultListModel<Bouquet> cartListModel = new DefaultListModel<>();
     private final JList<Bouquet> cartList = new JList<>(cartListModel);
 
@@ -43,9 +48,9 @@ public class FloralShopFrame extends JFrame {
         loadCatalog();
     }
 
-//want all components of a commerce site going to need to research into e-commerce sites
-// need title, catalog with cart, a catalog panel, need a cart panel to view items in the cart,
-// an order summary for the customers to review and to verify
+    //want all components of a commerce site going to need to research into e-commerce sites
+    // need title, catalog with cart, a catalog panel, need a cart panel to view items in the cart,
+    // an order summary for the customers to review and to verify
     private void initComponents() {
         setLayout(new BorderLayout());
 
@@ -57,9 +62,34 @@ public class FloralShopFrame extends JFrame {
         // Center: catalog + cart
         JPanel centerPanel = new JPanel(new GridLayout(1, 2, 10, 0));
 
-        // Catalog panel
+        // ================= CATALOG PANEL (LEFT) =================
         JPanel catalogPanel = new JPanel(new BorderLayout());
         catalogPanel.setBorder(BorderFactory.createTitledBorder("Catalog"));
+
+        // --- Search bar at top ---
+        JPanel searchPanel = new JPanel(new BorderLayout(5, 0));
+        JLabel searchLabel = new JLabel("Search: ");
+        searchPanel.add(searchLabel, BorderLayout.WEST);
+        searchPanel.add(searchField, BorderLayout.CENTER);
+        catalogPanel.add(searchPanel, BorderLayout.NORTH);
+
+        // when user types, filter the catalog
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            private void update() {
+                filterCatalog(searchField.getText());
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) { update(); }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) { update(); }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) { update(); }
+        });
+
+        // --- Catalog list ---
         catalogList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         catalogPanel.add(new JScrollPane(catalogList), BorderLayout.CENTER);
 
@@ -67,7 +97,7 @@ public class FloralShopFrame extends JFrame {
         addToCartBtn.addActionListener(this::onAddToOrder);
         catalogPanel.add(addToCartBtn, BorderLayout.SOUTH);
 
-        // Cart panel
+        // ================= CART PANEL (RIGHT) =================
         JPanel cartPanel = new JPanel(new BorderLayout());
         cartPanel.setBorder(BorderFactory.createTitledBorder("Current Order"));
         cartList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -101,12 +131,34 @@ public class FloralShopFrame extends JFrame {
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
+    // Load full catalog from service into master list + show all
     private void loadCatalog() {
-        catalogListModel.clear();
-        for (Bouquet b : catalogService.getAll()) {
-            catalogListModel.addElement(b);
-        }
+        allBouquets.clear();
+        allBouquets.addAll(catalogService.getAll());
+
+        filterCatalog("");   // show everything by default
         updateOrderSummaryPreview();
+    }
+
+    // === SEARCH FILTER (partial + case-insensitive) ===
+    private void filterCatalog(String query) {
+        String q = query.trim().toLowerCase();
+        catalogListModel.clear();
+
+        if (q.isEmpty()) {
+            // empty search → show full catalog
+            for (Bouquet b : allBouquets) {
+                catalogListModel.addElement(b);
+            }
+            return;
+        }
+
+        for (Bouquet b : allBouquets) {
+            String name = b.getName();   // adjust if your field is different
+            if (name != null && name.toLowerCase().contains(q)) {
+                catalogListModel.addElement(b);
+            }
+        }
     }
 
     private void onAddToOrder(ActionEvent e) {
@@ -174,47 +226,47 @@ public class FloralShopFrame extends JFrame {
     }
 
     private void onAdminPanel(ActionEvent e) {
-    AuthService auth = new AuthService();
-    AuditLogger logger = new AuditLogger();
+        AuthService auth = new AuthService();
+        AuditLogger logger = new AuditLogger();
 
-    JPanel panel = new JPanel(new GridLayout(2, 2, 5, 5));
-    JTextField userField = new JTextField("admin");
-    JPasswordField passField = new JPasswordField();
+        JPanel panel = new JPanel(new GridLayout(2, 2, 5, 5));
+        JTextField userField = new JTextField("admin");
+        JPasswordField passField = new JPasswordField();
 
-    panel.add(new JLabel("Username:"));
-    panel.add(userField);
-    panel.add(new JLabel("Password:"));
-    panel.add(passField);
+        panel.add(new JLabel("Username:"));
+        panel.add(userField);
+        panel.add(new JLabel("Password:"));
+        panel.add(passField);
 
-    int result = JOptionPane.showConfirmDialog(
-            this,
-            panel,
-            "Admin Login",
-            JOptionPane.OK_CANCEL_OPTION,
-            JOptionPane.PLAIN_MESSAGE
-    );
+        int result = JOptionPane.showConfirmDialog(
+                this,
+                panel,
+                "Admin Login",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+        );
 
-    if (result == JOptionPane.OK_OPTION) {
-        String username = userField.getText();
-        String password = new String(passField.getPassword());
+        if (result == JOptionPane.OK_OPTION) {
+            String username = userField.getText();
+            String password = new String(passField.getPassword());
 
-        if (auth.authenticate(username, password)) {
-            logger.log("Admin logged in via GUI", username);
+            if (auth.authenticate(username, password)) {
+                logger.log("Admin logged in via GUI", username);
 
-            // OPEN THE NEW ADMIN WINDOW
-            AdminFrame adminFrame = new AdminFrame(catalogService, orderService, logger);
-            adminFrame.setVisible(true);
+                // OPEN THE NEW ADMIN WINDOW
+                AdminFrame adminFrame = new AdminFrame(catalogService, orderService, logger);
+                adminFrame.setVisible(true);
 
-            JOptionPane.showMessageDialog(this,
-                    "Admin logged in. Admin Panel opened.",
-                    "Admin Panel",
-                    JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this,
-                    "Invalid admin credentials.",
-                    "Admin Panel",
-                    JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        "Admin logged in. Admin Panel opened.",
+                        "Admin Panel",
+                        JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Invalid admin credentials.",
+                        "Admin Panel",
+                        JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
-}
 }
