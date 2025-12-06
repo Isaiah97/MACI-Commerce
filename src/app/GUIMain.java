@@ -6,10 +6,10 @@ import service.OrderService;
 import service.AuditLogger;  
 
 public class GUIMain {
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> {
-			CatalogService catalogService = new CatalogService();
-			OrderService orderService = new OrderService();
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            CatalogService catalogService = new CatalogService();
+            OrderService orderService = new OrderService();
 
 			AuditLogger logger = new AuditLogger();   // or whatever constructor your project uses
 
@@ -18,4 +18,8 @@ public class GUIMain {
 		});
 	}
 
+            FloralShopFrame frame = new FloralShopFrame(catalogService, orderService);
+            frame.setVisible(true);
+        });
+    }
 }

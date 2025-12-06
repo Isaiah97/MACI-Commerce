@@ -26,6 +26,7 @@ public class AdminFrame extends JFrame {
     private final OrderService orderService;
     private final AuditLogger logger;
    
+
     // Orders tab components
     private JTable ordersTable;
     private DefaultTableModel ordersModel;
@@ -132,6 +133,43 @@ private JPanel createOrdersTab() {
 
     return panel;
 }
+    private void initUI() {
+        JTabbedPane tabs = new JTabbedPane();
+        tabs.addTab("Orders", createOrdersTab());
+        tabs.addTab("Catalog", createCatalogTab());
+        add(tabs);
+    }
+
+    // ===================== ORDERS TAB =====================
+
+    private JPanel createOrdersTab() {
+        JPanel panel = new JPanel(new BorderLayout());
+
+        String[] cols = {"Order ID", "Items", "Shipping", "Total", "Status"};
+        ordersModel = new DefaultTableModel(cols, 0) {
+            @Override
+            public boolean isCellEditable(int row, int col) {
+                return false;
+            }
+        };
+        ordersTable = new JTable(ordersModel);
+        refreshOrdersTable();
+
+        JPanel buttons = new JPanel();
+        JButton shippedBtn = new JButton("Mark as SHIPPED");
+        JButton deliveredBtn = new JButton("Mark as DELIVERED");
+
+        shippedBtn.addActionListener(e -> updateOrderStatus(OrderStatus.SHIPPED));
+        deliveredBtn.addActionListener(e -> updateOrderStatus(OrderStatus.DELIVERED));
+
+        buttons.add(shippedBtn);
+        buttons.add(deliveredBtn);
+
+        panel.add(new JScrollPane(ordersTable), BorderLayout.CENTER);
+        panel.add(buttons, BorderLayout.SOUTH);
+
+        return panel;
+    }
 
     private void refreshOrdersTable() {
         ordersModel.setRowCount(0);
@@ -222,3 +260,16 @@ private JPanel createOrdersTab() {
 
 }
 
+        catalogModel.setRowCount(0);
+
+        List<Bouquet> bouquets = catalogService.getAll();
+        for (Bouquet b : bouquets) {
+            catalogModel.addRow(new Object[]{
+                    b.getName(),
+                    b.getCategory(),
+                    b.getPrice(),
+                    b.isAvailable()
+            });
+        }
+    }
+}

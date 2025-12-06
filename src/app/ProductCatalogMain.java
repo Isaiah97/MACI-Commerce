@@ -10,42 +10,79 @@ import java.util.*;
 
 public class ProductCatalogMain {
     public static void main(String[] args) {
-        
+
         CatalogService catalog = new CatalogService();
 
-        System.out.println("Full Catalog: ");
-        for (Bouquet b : catalog.getAll()){
-            System.out.println(b);
+        //  FULL CATALOG
+        sectionHeader("FULL PRODUCT CATALOG");
+        for (Bouquet b : catalog.getAll()) {
+            printBouquetLine(b);
         }
 
+        //  SEARCH RESULTS
         List<Bouquet> results = catalog.search("Rose", "Roses", 10, 50);
-        System.out.println("\nSearch Results (\"Rose\", category \"Roses\", price 10–50):");
+
+        sectionHeader("SEARCH RESULTS (\"Rose\", category \"Roses\", price 10–50)");
+        if (results.isEmpty()) {
+            System.out.println("No bouquets matched the search criteria.");
+            return;
+        }
+
         for (Bouquet b : results) {
-            System.out.println(b);
+            printBouquetLine(b);
         }
 
-        // Create an order from the search results
-        if (!results.isEmpty()) {
-            Order order = new Order(results, ShippingMethod.EXPRESS);
+        //  ORDER & PAYMENT
+        Order order = new Order(results, ShippingMethod.EXPRESS);
 
-            // Process payment
-            PaymentProcessor payment = new PaymentProcessor();
-            double totalAmount = order.getTotal();   // uses your Order.getTotal()
-            boolean paid = payment.processPayment("4111111111111111", "12/26", "123", totalAmount);
+        sectionHeader("PAYMENT PROCESSING");
+        PaymentProcessor payment = new PaymentProcessor();
+        double totalAmount = order.getTotal();
+        boolean paid = payment.processPayment("4111111111111111", "12/26", "123", totalAmount);
 
-            if (paid) {
-                System.out.println("\nPayment approved for order:");
-                System.out.println(order);
+        if (paid) {
+            System.out.println("✔ Payment approved for order.\n");
+            sectionHeader("ORDER SUMMARY");
+            printOrderSummary(order);
 
-                // Send confirmation email
-                EmailService email = new EmailService();
-                email.sendConfirmation(order);
-            } else {
-                System.out.println("\nPayment failed for order:");
-                System.out.println(order);
-            }
+            // Send confirmation email
+            EmailService email = new EmailService();
+            email.sendConfirmation(order);
         } else {
-            System.out.println("\nNo bouquets matched the search criteria.");
+            System.out.println("❌ Payment failed for order.\n");
+            sectionHeader("ORDER SUMMARY");
+            printOrderSummary(order);
         }
+    }
+
+    //        Helper Formatting
+
+    private static void sectionHeader(String title) {
+        System.out.println("\n========================================");
+        System.out.println("           " + title);
+        System.out.println("========================================");
+    }
+
+    private static void printBouquetLine(Bouquet b) {
+        System.out.printf("• %-30s (%s)  $%-6.2f  [%s]%n",
+                b.getName(),
+                b.getCategory(),
+                b.getPrice(),
+                b.isAvailable() ? "Available" : "Unavailable");
+    }
+
+    private static void printOrderSummary(Order order) {
+        System.out.printf("Order ID: %s%n", order.getOrderId());
+        System.out.println("Items:");
+        for (Bouquet b : order.getItems()) {
+            System.out.printf("  - %-30s $%-6.2f [%s]%n",
+                    b.getName(),
+                    b.getPrice(),
+                    b.isAvailable() ? "Available" : "Unavailable");
+        }
+        System.out.printf("Shipping: %-15s%n", order.getShippingMethod());
+        System.out.printf("Total: $%.2f%n", order.getTotal());
+        System.out.printf("Status: %s%n", order.getStatus());
+        System.out.printf("Delivery Status: %s%n", order.getDeliveryStatus());
     }
 }
