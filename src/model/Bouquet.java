@@ -20,6 +20,7 @@ public class Bouquet {
     public String getCategory() { return category; }
     public double getPrice() { return price; }
     public boolean isInStock() { return inStock; }
+    public boolean isAvailable() { return inStock; }
 
     @Override
     public String toString() {
