@@ -9,11 +9,25 @@ import model.Admin;
 
 public class AuthService {
     private final Admin admin = new Admin("admin", "secure123");
+if (auth.authenticate(username, password)) {
+    logger.log("Admin logged in via GUI", username);
 
-    public boolean authenticate(String username, String password) {
-        return admin.getUsername().equals(username) 
-        && admin.getPassword().equals(password);
+    // OPEN THE NEW ADMIN WINDOW
+    AdminFrame adminFrame = new AdminFrame(catalogService, orderService, logger);
+    adminFrame.setVisible(true);
+
+    JOptionPane.showMessageDialog(this,
+            "Admin logged in. Admin Panel opened.",
+            "Admin Panel",
+            JOptionPane.INFORMATION_MESSAGE);
+} else {
+    JOptionPane.showMessageDialog(this,
+            "Invalid admin credentials.",
+            "Admin Panel",
+            JOptionPane.ERROR_MESSAGE);
     }
+
 }
+
 
 
