@@ -41,9 +41,9 @@ public class AuthService {
                     "Invalid admin credentials.",
                     "Admin Panel",
                     JOptionPane.ERROR_MESSAGE);
+                }
         }
     }
 }
-
 
 
