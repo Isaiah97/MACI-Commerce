@@ -128,29 +128,51 @@ public class AdminFrame extends JFrame {
                     o.getOrderId(),
                     itemNames,
                     o.getShippingMethod(),
-                    o.getTotal(),
+                    String.format("$%.2f", o.getTotal()),
                     o.getStatus()
             });
         }
     }
 
+    /**
+     * *** THE KEY FIX ***
+     * Now properly uses orderService.updateOrderStatus() instead of
+     * directly modifying the order object
+     */
     private void updateOrderStatus(OrderStatus newStatus) {
         int row = ordersTable.getSelectedRow();
         if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Select an order first.");
+            JOptionPane.showMessageDialog(this, 
+                "Please select an order first.", 
+                "No Selection", 
+                JOptionPane.WARNING_MESSAGE);
             return;
         }
 
+        // Get the order ID from the selected row
         String orderId = (String) ordersTable.getValueAt(row, 0);
 
-        Order selected = orderService.getAllOrders().stream()
-                .filter(o -> o.getOrderId().equals(orderId))
-                .findFirst()
-                .orElse(null);
+        // Use the OrderService's updateOrderStatus method
+        boolean success = orderService.updateOrderStatus(orderId, newStatus);
 
-        if (selected == null) {
-            JOptionPane.showMessageDialog(this, "Order not found.");
-            return;
+        if (success) {
+            // Log the successful update
+            logger.log(String.format("Order %s updated to %s", orderId, newStatus), "admin");
+            
+            // Refresh the table to show the changes
+            refreshOrdersTable();
+            
+            // Show success message
+            JOptionPane.showMessageDialog(this,
+                String.format("Order %s successfully updated to %s", orderId, newStatus),
+                "Success",
+                JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            // Show error if order wasn't found
+            JOptionPane.showMessageDialog(this,
+                "Order not found. Unable to update status.",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
         }
 
         selected.setStatus(newStatus);
@@ -199,6 +221,8 @@ public class AdminFrame extends JFrame {
             catalogModel.addRow(new Object[]{
                     b.getName(),
                     b.getCategory(),
+                    String.format("$%.2f", b.getPrice()),
+                    b.isInStock() ? "Available" : "Unavailable"
                     b.getPrice(),
                     b.isAvailable() ? "Available" : "Unavailable"
             });
