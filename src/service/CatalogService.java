@@ -63,7 +63,7 @@ public class CatalogService {
         
         bouquets.add(new Bouquet(
             "Tulip Treasures",
-            "Variety of different colors of tulips D.",
+            "12 count of different colored tulips.",
             "Tulips",
             65.99,
             true
@@ -79,7 +79,7 @@ public class CatalogService {
 
         bouquets.add(new Bouquet(
             "Garden of Pink",
-            "Various shades of pink carnations with white baby's breath.",
+            "24 count of various shades of pink carnations mixed with white baby's breath.",
             "Carnations",
             15.99,
             true
