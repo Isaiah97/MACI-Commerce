@@ -80,7 +80,7 @@ public class CatalogService {
         bouquets.add(new Bouquet(
             "Garden of Pink",
             "Various shades of pink carnations with white baby's breath.",
-            "Mixed",
+            "Carnations",
             15.99,
             true
         ));
