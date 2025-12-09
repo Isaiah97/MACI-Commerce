@@ -174,6 +174,10 @@ public class AdminFrame extends JFrame {
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
         }
+
+        selected.setStatus(newStatus);
+        logger.log("Order " + orderId + " updated to " + newStatus, "admin");
+        refreshOrdersTable();
     }
 
     // ===================== CATALOG TAB =====================
@@ -219,6 +223,8 @@ public class AdminFrame extends JFrame {
                     b.getCategory(),
                     String.format("$%.2f", b.getPrice()),
                     b.isInStock() ? "Available" : "Unavailable"
+                    b.getPrice(),
+                    b.isAvailable() ? "Available" : "Unavailable"
             });
         }
     }
