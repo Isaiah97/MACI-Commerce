@@ -44,6 +44,46 @@ public class CatalogService {
             35.99,
             true
         ));
+        
+        bouquets.add(new Bouquet(
+            "BeetleJuice Boogie",
+            "Deep Violet Dablias with a hint of Green Trick Dianthus.",
+            "Mixed",
+            65.99,
+            true
+        ));
+        
+        bouquets.add(new Bouquet(
+            "Cottage Charm",
+            "Pink Roses mixed with Pink Hydrangeas and varied greenery for a rustic touch.",
+            "Mixed",
+            22.99,
+            true
+        ));
+        
+        bouquets.add(new Bouquet(
+            "Tulip Treasures",
+            "Variety of different colors of tulips D.",
+            "Tulips",
+            65.99,
+            true
+        ));
+        
+        bouquets.add(new Bouquet(
+            "Happy Camper ",
+            "15 Large Traditional Sunflowers.",
+            "Sunflowers",
+            30.99,
+            true
+        ));
+
+        bouquets.add(new Bouquet(
+            "Garden of Pink",
+            "Various shades of pink carnations with white baby's breath.",
+            "Mixed",
+            15.99,
+            true
+        ));
     }
 
     public List<Bouquet> getAll() {
