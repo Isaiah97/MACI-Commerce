@@ -154,8 +154,8 @@ public class FloralShopFrame extends JFrame {
         }
 
         for (Bouquet b : allBouquets) {
-            String name = b.getName();   
-            if (name != null && name.toLowerCase().contains(q)) {
+            String description = b.getDescription();   
+            if (description != null && name.toLowerCase().contains(q)) {
                 catalogListModel.addElement(b);
             }
         }
