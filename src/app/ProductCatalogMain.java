@@ -78,9 +78,9 @@ public class ProductCatalogMain {
         for (Bouquet b : order.getItems()) {
             System.out.printf("  - %-30s $%-6.2f [%s]%n",
                     b.getName(),
-                    b.getPrice(),
-
+                    b.getPrice());
         }
+
         System.out.printf("\nShipping: %-15s%n", order.getShippingMethod());
         System.out.printf("Total: $%.2f%n", order.getTotal());
         System.out.printf("Status: %s%n", order.getStatus());
