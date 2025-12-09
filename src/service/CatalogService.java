@@ -36,6 +36,14 @@ public class CatalogService {
             44.25,
             true
         ));
+        
+        bouquets.add(new Bouquet(
+            "Honeybee Hug",
+            "Yellow Sunflowers and Daises with blue accents.",
+            "Mixed",
+            35.99,
+            true
+        ));
     }
 
     public List<Bouquet> getAll() {
