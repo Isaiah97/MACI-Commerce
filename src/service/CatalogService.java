@@ -55,7 +55,7 @@ public class CatalogService {
 
         for (Bouquet b : bouquets) {
             boolean matchesName = (name == null || name.isEmpty())
-                    || b.getName().toLowerCase().contains(name.toLowerCase());
+                    || b.getName().toLowerCase().contains(name.toLowerCase())
                     || b.getDescription().toLowerCase().contains(name.toLowerCase());
 
             boolean matchesCategory = (category == null || category.isEmpty())
