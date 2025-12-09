@@ -66,21 +66,22 @@ public class ProductCatalogMain {
     private static void printBouquetLine(Bouquet b) {
         System.out.printf("• %-30s (%s)  $%-6.2f  [%s]%n",
                 b.getName(),
+                b.getDescription(),
                 b.getCategory(),
                 b.getPrice(),
                 b.isAvailable() ? "Available" : "Unavailable");
     }
 
     private static void printOrderSummary(Order order) {
-        System.out.printf("Order ID: %s%n", order.getOrderId());
-        System.out.println("Items:");
+        System.out.printf("\nOrder ID: %s%n", order.getOrderId());
+        System.out.println("\nItems:");
         for (Bouquet b : order.getItems()) {
             System.out.printf("  - %-30s $%-6.2f [%s]%n",
                     b.getName(),
                     b.getPrice(),
-                    b.isAvailable() ? "Available" : "Unavailable");
+
         }
-        System.out.printf("Shipping: %-15s%n", order.getShippingMethod());
+        System.out.printf("\nShipping: %-15s%n", order.getShippingMethod());
         System.out.printf("Total: $%.2f%n", order.getTotal());
         System.out.printf("Status: %s%n", order.getStatus());
         System.out.printf("Delivery Status: %s%n", order.getDeliveryStatus());
