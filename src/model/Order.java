@@ -30,7 +30,11 @@ public class Order {
     }
 
     private void calculateTotal() {
-        //restarting the entire calculateTotal privat helper
+        double rawTotal = items.stream().mapToDouble(Bouquet::getPrice).sum() + shippingMethod.getCost();
+
+        
+
+
     }
 
     
