@@ -3,8 +3,12 @@ package model;
 import java.util.List;
 import java.util.UUID;
 import java.math.RoundingMode;
+import java.math.BigDecimal;
 
 public class Order {
+
+// fields in the Order.java program
+
     private String orderId;
     private List<Bouquet> items;
     private ShippingMethod shippingMethod;
@@ -12,6 +16,8 @@ public class Order {
     private OrderStatus status;
     private DeliveryStatus deliveryStatus;
 
+
+//constructor for the Order.java program
     public Order(List<Bouquet> items, ShippingMethod shippingMethod) {
         this.orderId = UUID.randomUUID().toString();
         this.items = items;
