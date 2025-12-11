@@ -69,11 +69,12 @@ public class Order {
         this.status = status;
     }
 
-    //
+    //returns the status on the delivery of the product set by the Admins
     public DeliveryStatus getDeliveryStatus() { 
         return deliveryStatus;
     }
 
+    //allows admins to set the status of the delivery thru the admin panel
     public void setDeliveryStatus(DeliveryStatus deliveryStatus) { 
         this.deliveryStatus = deliveryStatus;
     }
