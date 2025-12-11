@@ -18,6 +18,8 @@ public class Order {
 
 
 //constructor for the Order.java program
+// will use this to develop helpers
+
     public Order(List<Bouquet> items, ShippingMethod shippingMethod) {
         this.orderId = UUID.randomUUID().toString();
         this.items = items;
@@ -30,6 +32,7 @@ public class Order {
     private void calculateTotal() {
         total = items.stream().mapToDouble(Bouquet::getPrice).sum() + shippingMethod.getCost()
         .setScale(2, RoundingMode.HALF_UP);
+        //error here needs to be fixed
     }
 
     
