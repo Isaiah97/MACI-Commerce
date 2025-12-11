@@ -20,6 +20,7 @@ public class Order {
 //constructor for the Order.java program
 // will use this to develop helpers
 
+//all needed fields the team has came up with
     public Order(List<Bouquet> items, ShippingMethod shippingMethod) {
         this.orderId = UUID.randomUUID().toString();
         this.items = items;
