@@ -29,6 +29,8 @@ public class Order {
         calculateTotal();
     }
 
+//redundant zero issue fixed
+    //private helper used to calculate the bouquet price and shipping price
     private void calculateTotal() {
         double rawTotal = items.stream().mapToDouble(Bouquet::getPrice).sum() + shippingMethod.getCost();
 
