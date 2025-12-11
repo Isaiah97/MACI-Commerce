@@ -53,19 +53,23 @@ public class Order {
     public List<Bouquet> getItems() { 
         return items; 
     }
-    
-    //
+
+    //returns the shipping method of user's choice
     public ShippingMethod getShippingMethod() { 
         return shippingMethod;
     }
 
+    //returns the status on item availability
     public OrderStatus getStatus() { 
         return status;
     }
+
+    //Admins can set the availability status on products
     public void setStatus(OrderStatus status) { 
         this.status = status;
     }
 
+    //
     public DeliveryStatus getDeliveryStatus() { 
         return deliveryStatus;
     }
@@ -76,8 +80,8 @@ public class Order {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Order ID: " + orderId + "\n");
-        items.forEach(b -> sb.append("- ").append(b.toString()).append("\n"));
+        //StringBuilder sb = new StringBuilder("Order ID: " + orderId + "\n");
+        //items.forEach(b -> sb.append("- ").append(b.toString()).append("\n"));
         sb.append("Shipping: ").append(shippingMethod.name())
           .append(" ($").append(shippingMethod.getCost()).append(")\n")
           .append("Estimated Delivery: ").append(shippingMethod.getDeliveryDays()).append(" days\n")
