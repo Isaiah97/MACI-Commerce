@@ -51,7 +51,7 @@ public class Order {
 
     public DeliveryStatus getDeliveryStatus() { 
         return deliveryStatus;
-    ]
+    }
 
     public void setDeliveryStatus(DeliveryStatus deliveryStatus) { 
         this.deliveryStatus = deliveryStatus;
