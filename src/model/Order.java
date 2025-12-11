@@ -24,14 +24,37 @@ public class Order {
         total = items.stream().mapToDouble(Bouquet::getPrice).sum() + shippingMethod.getCost();
     }
 
-    public String getOrderId() { return orderId; }
-    public double getTotal() { return total; }
-    public List<Bouquet> getItems() { return items; }
-    public ShippingMethod getShippingMethod() { return shippingMethod; }
-    public OrderStatus getStatus() { return status; }
-    public void setStatus(OrderStatus status) { this.status = status; }
-    public DeliveryStatus getDeliveryStatus() { return deliveryStatus; }
-    public void setDeliveryStatus(DeliveryStatus deliveryStatus) { this.deliveryStatus = deliveryStatus; }
+    
+    public String getOrderId() { 
+        return orderId; 
+    }
+   
+    public double getTotal() { 
+        return total;
+    }
+
+    public List<Bouquet> getItems() { 
+        return items; 
+    }
+
+    public ShippingMethod getShippingMethod() { 
+        return shippingMethod;
+    }
+
+    public OrderStatus getStatus() { 
+        return status;
+    }
+    public void setStatus(OrderStatus status) { 
+        this.status = status;
+    }
+
+    public DeliveryStatus getDeliveryStatus() { 
+        return deliveryStatus;
+    ]
+
+    public void setDeliveryStatus(DeliveryStatus deliveryStatus) { 
+        this.deliveryStatus = deliveryStatus;
+    }
 
     @Override
     public String toString() {
