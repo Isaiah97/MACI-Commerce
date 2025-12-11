@@ -80,8 +80,8 @@ public class Order {
 
     @Override
     public String toString() {
-        //StringBuilder sb = new StringBuilder("Order ID: " + orderId + "\n");
-        //items.forEach(b -> sb.append("- ").append(b.toString()).append("\n"));
+        StringBuilder sb = new StringBuilder("Order ID: " + orderId + "\n");
+        items.forEach(b -> sb.append("- ").append(b.toString()).append("\n"));
         sb.append("Shipping: ").append(shippingMethod.name())
           .append(" ($").append(shippingMethod.getCost()).append(")\n")
           .append("Estimated Delivery: ").append(shippingMethod.getDeliveryDays()).append(" days\n")
