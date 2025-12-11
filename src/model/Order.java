@@ -22,7 +22,8 @@ public class Order {
     }
 
     private void calculateTotal() {
-        total = items.stream().mapToDouble(Bouquet::getPrice).sum() + shippingMethod.getCost();
+        total = items.stream().mapToDouble(Bouquet::getPrice).sum() + shippingMethod.getCost()
+        .setScale(2, RoundingMode.HALF_UP);
     }
 
     
