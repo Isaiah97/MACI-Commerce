@@ -21,6 +21,7 @@ public class Order {
 // will use this to develop helpers
 
 //all needed fields the team has came up with
+    //more additions can be added
     public Order(List<Bouquet> items, ShippingMethod shippingMethod) {
         this.orderId = UUID.randomUUID().toString();
         this.items = items;
@@ -40,19 +41,20 @@ public class Order {
 
     }
 
-    
+    //returns item id
     public String getOrderId() { 
         return orderId; 
     }
-   
+   //returns the total of the spendings
     public double getTotal() { 
         return total;
     }
-
+    //displays the list of the products in our catalog
     public List<Bouquet> getItems() { 
         return items; 
     }
-
+    
+    //
     public ShippingMethod getShippingMethod() { 
         return shippingMethod;
     }
