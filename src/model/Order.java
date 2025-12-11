@@ -32,8 +32,8 @@ public class Order {
     private void calculateTotal() {
         double rawTotal = items.stream().mapToDouble(Bouquet::getPrice).sum() + shippingMethod.getCost();
 
-        
-
+        BigDecimal rounded = BigDecimal.valueOf(rawTotal).setScale(2, RoundingMode.HALF_UP);
+        this.total = rounded.doubleValue();
 
     }
 
