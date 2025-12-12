@@ -79,6 +79,8 @@ public class Order {
         this.deliveryStatus = deliveryStatus;
     }
 
+//adding all return values into one compile string storing order 1d, shipping method, the cost of shipping method,
+//estimated delivery type and time, total of all costs, status of the item, and delivery status
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Order ID: " + orderId + "\n");
