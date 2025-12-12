@@ -81,6 +81,7 @@ public class ProductCatalogMain {
                     b.getPrice());
         }
 
+
         System.out.printf("\nShipping: %-15s%n", order.getShippingMethod());
         System.out.printf("Total: $%.2f%n", order.getTotal());
         System.out.printf("Status: %s%n", order.getStatus());
