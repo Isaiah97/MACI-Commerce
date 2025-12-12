@@ -73,7 +73,7 @@ public class ProductCatalogMain {
     }
 
     private static void printOrderSummary(Order order) {
-        System.out.printf("\nOrder ID: %s%n", order.getOrderId());
+        //System.out.printf("\nOrder ID: %s%n", order.getOrderId());
         System.out.println("\nItems:");
         for (Bouquet b : order.getItems()) {
             System.out.printf("  - %-30s $%-6.2f [%s]%n",
