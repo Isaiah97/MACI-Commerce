@@ -272,15 +272,21 @@ public class FloralShopFrame extends JFrame {
     //creating a new remove from cart button
     JButton removeBtn = new JButton("Remove Selected");
     removeBtn.addActionListener(e -> {
-        String selected = currentOrderList.getSelectedValue();
-    if (selected != null){
-        String bouquetName = selected.split("\\(")[0];
-        boolean removed = orderService.removeBouquetFromOrder(currentOrder.getOrderId(), bouquetName);
-        if (removed) {
-            updateOrderDisplay();
-        }
+    // 1. Use 'cartList' (your actual variable name)
+    Bouquet selected = cartList.getSelectedValue(); 
+    
+    if (selected != null) {
+        // 2. Remove from the visual list model
+        cartListModel.removeElement(selected); 
+        
+        // 3. Refresh the order summary text area
+        updateOrderSummaryPreview(); 
+        
+        JOptionPane.showMessageDialog(this, "Removed: " + selected.getName());
+    } else {
+        JOptionPane.showMessageDialog(this, "Please select an item from the Current Order list to remove.");
     }
 });
-buttonPanel.add(removeBtn);
+buttonRow.add(removeBtn);
 
                                 
