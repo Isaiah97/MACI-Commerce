@@ -93,4 +93,7 @@ public class Order {
           .append("Delivery Status: ").append(deliveryStatus);
         return sb.toString();
     }
+    public List<Bouquet> getBouquets() {
+        return this.items;
+    }
 }
