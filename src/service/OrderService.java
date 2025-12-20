@@ -33,10 +33,13 @@ public class OrderService {
     }
     //Remove from Cart feature
     public boolean removeBouquetFromOrder (String orderId, String bouquetName) {
-        Optional<Order> orderOpt.get();
-        return order.getBouquets().removeIf(b -> b.getName().equalsIgnoreCase(bouquetName));
+        Optional<Order> orderOpt = getOrderById(orderId);
+
+        if (orderOpt.isPresent()) {
+            Order order = orderOpt.get()
+            return order.getBouquets().removeIf(b -> b.getName().equalsIgnoreCase(bouquetName));
     }
-    return false;
+        return false;
     }
 }
 
