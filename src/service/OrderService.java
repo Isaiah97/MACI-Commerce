@@ -31,5 +31,12 @@ public class OrderService {
         }
         return false;
     }
+    //Remove from Cart feature
+    public boolean removeBouquetFromOrder (String orderId, String bouquetName) {
+        Optional<Order> orderOpt.get();
+        return order.getBouquets().removeIf(b -> b.getName().equalsIgnoreCase(bouquetName));
+    }
+    return false;
+    }
 }
 
