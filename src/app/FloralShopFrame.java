@@ -125,6 +125,7 @@ public class FloralShopFrame extends JFrame {
 
         buttonRow.add(adminBtn);
         buttonRow.add(checkoutBtn);
+        buttonRow.add(removeBtn);
 
         bottomPanel.add(buttonRow, BorderLayout.SOUTH);
 
@@ -287,6 +288,6 @@ public class FloralShopFrame extends JFrame {
         JOptionPane.showMessageDialog(this, "Please select an item from the Current Order list to remove.");
     }
 });
-buttonRow.add(removeBtn);
+
 }
                                 
