@@ -288,5 +288,5 @@ public class FloralShopFrame extends JFrame {
     }
 });
 buttonRow.add(removeBtn);
-
+}
                                 
