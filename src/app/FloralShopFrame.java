@@ -119,7 +119,7 @@ public class FloralShopFrame extends JFrame {
 
         JButton adminBtn = new JButton("Admin Panel");
         adminBtn.addActionListener(this::onAdminPanel);
-
+        
         JButton checkoutBtn = new JButton("Checkout");
         checkoutBtn.addActionListener(this::onCheckout);
 
@@ -138,7 +138,7 @@ public class FloralShopFrame extends JFrame {
         });
 
         
-        buttonRow.add(adminBtn);
+        buttonRow.add(adminBtn);//adding admin button to layout
         buttonRow.add(checkoutBtn);
         buttonRow.add(removeBtn); //adding the button to the layout
 
