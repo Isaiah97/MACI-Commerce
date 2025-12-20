@@ -36,7 +36,7 @@ public class OrderService {
         Optional<Order> orderOpt = getOrderById(orderId);
 
         if (orderOpt.isPresent()) {
-            Order order = orderOpt.get()
+            Order order = orderOpt.get();
             return order.getBouquets().removeIf(b -> b.getName().equalsIgnoreCase(bouquetName));
     }
         return false;
