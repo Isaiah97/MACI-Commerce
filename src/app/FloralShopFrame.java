@@ -123,31 +123,24 @@ public class FloralShopFrame extends JFrame {
         JButton checkoutBtn = new JButton("Checkout");
         checkoutBtn.addActionListener(this::onCheckout);
 
-         //creating a new remove from cart button
+         //creating the Remove Button
         JButton removeBtn = new JButton("Remove Selected");
         removeBtn.addActionListener(e -> {
-        // 1. Use 'cartList' (your actual variable name)
-        Bouquet selected = cartList.getSelectedValue(); 
-    
-        if (selected != null) {
-        // 2. Remove from the visual list model
-            cartListModel.removeElement(selected); 
+            Bouquet selected = cartList.getSelectedValue(); 
+             if (selected != null) {
+                cartListModel.removeElement(selected); 
+                 updateOrderSummaryPreview(); 
         
-        // 3. Refresh the order summary text area
-            updateOrderSummaryPreview(); 
-        
-        JOptionPane.showMessageDialog(this, "Removed: " + selected.getName());
-        } else {
-        JOptionPane.showMessageDialog(this, "Please select an item from the Current Order list to remove.");
-        }
+                JOptionPane.showMessageDialog(this, "Removed: " + selected.getName());
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please select an item from the Current Order list to remove.");
+            }
         });
 
         
         buttonRow.add(adminBtn);
         buttonRow.add(checkoutBtn);
-        buttonRow.add(removeBtn);
-
-   
+        buttonRow.add(removeBtn); //adding the button to the layout
 
         bottomPanel.add(buttonRow, BorderLayout.SOUTH);
 
