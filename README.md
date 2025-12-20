@@ -2,3 +2,7 @@ Topic: The MACI Commerce Flower Shop is a personal project our team built to mak
 
 ------------------------------------------------------------------------------------------------
 Why is it important?
+Our project is important because it demonstrates how to bridge complex backend logic with a user-centric interface using the Model-View-Controller (MVC) architecture. It provides a scalable solution for small businesses by managing real-time data synchronization, such as dynamic inventory searching and live cart updates. It highlights the practical application of software engineering principles to ensure a stable, secure, and accessible digital retail environment.
+
+------------------------------------------------------------------------------------------------
+How to use:
