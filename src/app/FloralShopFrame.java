@@ -131,7 +131,7 @@ public class FloralShopFrame extends JFrame {
                 cartListModel.removeElement(selected); 
                  updateOrderSummaryPreview(); 
         
-                JOptionPane.showMessageDialog(this, "Removed: " + selected.getName());
+                JOptionPane.showMessageDialog(this, "Removed: " + selected.getName());//displays the bouquet removed
                 } else {
                     JOptionPane.showMessageDialog(this, "Please select an item from the Current Order list to remove.");
             }
