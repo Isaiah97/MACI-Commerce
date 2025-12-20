@@ -139,7 +139,7 @@ public class FloralShopFrame extends JFrame {
 
         
         buttonRow.add(adminBtn);//adding admin button to layout
-        buttonRow.add(checkoutBtn);
+        buttonRow.add(checkoutBtn); //adding checkout button to the layout
         buttonRow.add(removeBtn); //adding the button to the layout
 
         bottomPanel.add(buttonRow, BorderLayout.SOUTH);
