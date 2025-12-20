@@ -269,4 +269,18 @@ public class FloralShopFrame extends JFrame {
             }
         }
     }
-}
+    //creating a new remove from cart button
+    JButton removeBtn = new JButton("Remove Selected");
+    removeBtn.addActionListener(e -> {
+        String selected = currentOrderList.getSelectedValue();
+    if (selected != null){
+        String bouquetName = selected.split("\\(")[0];
+        boolean removed = orderService.removeBouquetFromOrder(currentOrder.getOrderId(), bouquetName);
+        if (removed) {
+            updateOrderDisplay();
+        }
+    }
+});
+buttonPanel.add(removeBtn);
+
+                                
