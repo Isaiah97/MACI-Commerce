@@ -6,3 +6,23 @@ Our project is important because it demonstrates how to bridge complex backend l
 
 ------------------------------------------------------------------------------------------------
 How to use:
+1) Create an empty file within computer
+2) Cd into said file
+3) Log into github
+4) Click on green button, copy ssh link
+5) Open terminal, cd empty file
+6) Type git clone paste ssh link
+7) cd into src
+     -app (view) 
+     -service (controller)
+     -model (model)
+9) cd into MACI-commerce
+10) Type "javac -d bin $(find src/app src/model src/service -name "*.java")"
+11) cd into bin
+12) Type "java app.GUIMain"
+13) It is now a customer interface features: search, add, remove, checkout
+    
+Logging into Admin:
+15) Click admin panel
+16) enter password: secure123
+17) admin side: view orders, update status
